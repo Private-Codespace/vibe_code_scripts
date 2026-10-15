@@ -180,7 +180,7 @@ erDiagram
 | 00:55-01:15 | Platform | So sánh Supabase/Firestore/warehouse ở mức MVP | Viết decision record | Không chọn theo trend |
 | 01:15-01:30 | Nghỉ + clinic | Cắt scope quá lớn | Hoàn thiện canvas | Tối đa 3 Must stories |
 | 01:30-01:50 | Entity/relationship | Live story -> entity/cardinality | Liệt kê entities/cột | Có quan hệ rõ |
-| 01:50-02:15 | ERD + dictionary | Demo PK/FK, nullable/default | Vẽ ERD, điền data dictionary | ERD đọc được thành câu |
+| 01:50-02:15 | ERD + dictionary | Demo cách cung cấp context và review ERD AI tạo | Đưa artefact Buổi 2 cho AI, kiểm tra/chỉnh ERD | ERD đọc được thành câu |
 | 02:15-02:35 | Schema | Demo constraints/index từ query thật | Hoàn thành design | Mỗi cột/index có mục đích |
 | 02:35-02:50 | AI + Supabase | Sinh/review SQL, chạy migration demo | Chạy migration + seed | Table Editor khớp ERD |
 | 02:50-03:00 | Review | Điều phối peer review/pitch | Pitch 60 giây | Có plan sang buổi CRUD |
@@ -420,7 +420,259 @@ Seed phải chạy sau tables, tôn trọng FK và luôn là dữ liệu giả.
 | Phản biện | Có review và quyết định sửa | Nhận nguyên đầu ra AI |
 | Scope/an toàn | Nêu rõ hạn chế Auth/RLS | Nhầm schema là production security |
 
-## 11. Bài tập giữa Buổi 4 và buổi CRUD
+## 11. Bài tập liên thông: tiếp tục dự án từ Buổi 2
+
+### Mục đích
+
+Học viên **không chọn một case mới**. Họ dùng đúng product brief, 5-8 User Story, page map và wireframe đã làm ở Buổi 2 để thiết kế dữ liệu cho sản phẩm của mình. Bài tập biến các artefact sản phẩm đã có thành đầu vào kỹ thuật, tạo đường nối rõ ràng từ:
+
+```text
+Buổi 2: User Story -> page map -> wireframe
+Buổi 4: user action trên wireframe -> data cần lưu -> ERD -> migration
+Buổi 5: route/form từ Buổi 2 -> query/mutation CRUD
+```
+
+### Đầu vào bắt buộc mang từ Buổi 2
+
+| Artefact Buổi 2 | Dùng trong bài tập Buổi 4 như thế nào |
+|---|---|
+| Product brief | Xác định người vận hành, giá trị sản phẩm và scope MVP |
+| 2-3 Must-have User Story | Quyết định entity, cột và thao tác dữ liệu bắt buộc |
+| Page map/routes | Xác định page nào cần list/detail/create/edit và query tương ứng |
+| Wireframe | Chỉ ra field người dùng nhập, dữ liệu hiển thị, filter và CTA |
+| Danh sách “Later” | Chủ động loại table/cột/tính năng chưa phục vụ MVP |
+
+### Đề bài
+
+> Dùng dự án từ Buổi 2. Chọn **một thực thể chính** đã xuất hiện trong Must stories. Từ user story, page map và wireframe sẵn có, hãy thiết kế database cho MVP theo quy trình dưới đây. Không thêm tính năng mới chỉ để có nhiều bảng.
+
+#### Bước 1 - Traceability canvas (15 phút)
+
+Điền bảng này bằng chính nội dung Buổi 2:
+
+| Must story Buổi 2 | Route/wireframe liên quan | Người dùng bấm/nhập gì? | Dữ liệu phải lưu lâu dài | Không cần lưu ở MVP |
+|---|---|---|---|---|
+| | | | | |
+| | | | | |
+| | | | | |
+
+**Quy tắc phân biệt:**
+
+- Nội dung chỉ để hiển thị cố định (headline, nhãn nút) không nhất thiết là cột database.
+- State giao diện tạm thời (modal đang mở, input đang gõ dở) không nhất thiết phải lưu.
+- Hành động cần còn đúng sau refresh hoặc cần dùng ở page khác phải có dữ liệu lưu bền vững.
+
+#### Bước 2 - Quyết định kiến trúc (10 phút)
+
+Từ canvas, hoàn thành decision record:
+
+```text
+Workload vận hành chính của dự án Buổi 2:
+Câu hỏi phân tích/báo cáo (nếu có):
+Chọn OLTP / OLAP / kết hợp và lý do:
+Chọn SQL / NoSQL và lý do:
+Platform chọn cho MVP và trade-off:
+Một phần trong wireframe sẽ làm ở Buổi 5:
+Ba phần Later không thiết kế hôm nay:
+```
+
+#### Bước 3 - ERD và dictionary (25 phút)
+
+1. Chuẩn bị input cho AI: Must stories, traceability canvas, page map, wireframe và phần Later.
+2. Dùng Prompt 2 ở phần 7 để AI tạo ERD có PK, FK, cardinality, delete behavior và data dictionary nháp.
+3. Học viên kiểm tra/correct ERD bằng câu hỏi nghiệp vụ: “quan hệ này có đúng cách sản phẩm vận hành không?”, “bảng/cột nào chưa phục vụ story?”, “dữ liệu nào thiếu để UI hoạt động?”.
+4. Yêu cầu AI chỉnh ERD **theo phản hồi cụ thể**, sau đó chốt ERD và data dictionary.
+5. Viết tối đa ba query dự kiến từ page map: list, detail và filter/sort; dùng chúng để đề xuất tối đa hai index có lý do.
+
+#### Bước 4 - Migration, seed và review (25 phút)
+
+1. Dùng Prompt 3 ở phần 7 để tạo migration PostgreSQL/Supabase.
+2. So với ERD/data dictionary; sửa tên cột, type, constraint hoặc index không khớp trước khi chạy.
+3. Tạo seed data giả tối thiểu: 3 records có trạng thái khác nhau, một edge case để test.
+4. Chạy migration vào project demo trống, kiểm tra Table Editor, rồi chạy ba query dự kiến.
+5. Đổi bài cho một nhóm khác review bằng Prompt 4; ghi lại ít nhất một quyết định đã thay đổi.
+
+### Ví dụ nối tiếp hoàn chỉnh: Hana Desk
+
+| Artefact Buổi 2 | Quyết định Buổi 4 |
+|---|---|
+| Story: lễ tân xem lịch hôm nay | `appointments.starts_at`, `status`; query list theo ngày/giờ |
+| Story: tạo lịch từ cuộc gọi | `customers` + `appointments`; form cần customer, service, thời gian |
+| Story: đổi trạng thái | `appointments.status`, `updated_at`; CHECK cho bốn status |
+| Wireframe list có filter status | composite index `(status, starts_at)` |
+| Later: SMS, payment, lịch nhân viên | Không có bảng `message_logs`, `payments`, `staff_shifts` ở MVP |
+
+### Cách hoàn thành bài tập - làm theo từng bước
+
+Phần này là hướng dẫn thao tác dành cho học viên. Mỗi bước phải tạo ra một artefact lưu được; không chuyển sang bước sau nếu đầu ra bước trước còn mơ hồ.
+
+#### Bước A - Mở lại đúng artefact Buổi 2 (5 phút)
+
+1. Mở product brief, bảng Must/Should/Later, page map và wireframe của dự án mình.
+2. Khoanh **ba** Must story. Nếu có hơn ba, giữ ba story tạo ra một luồng vận hành khép kín.
+3. Chọn một thực thể chính xuất hiện lặp lại trong các story: `appointment`, `lead`, `task`, `order` hoặc `transaction`.
+4. Tạo folder nộp bài và tạo tám file theo danh sách deliverable ở phần dưới.
+
+**Ví dụ Hana Desk:** chọn `appointment`, không chọn đồng thời customer, nhân viên, ca làm, khuyến mãi và thanh toán là các thực thể chính. `customer` và `service` chỉ là entity phụ vì lịch hẹn cần tham chiếu đến chúng.
+
+#### Bước B - Điền traceability trước, không hỏi AI ngay (10 phút)
+
+Đọc từng story và wireframe, sau đó tự điền bảng. Một cột chỉ được thêm khi có ô “dữ liệu phải lưu lâu dài” tương ứng.
+
+| Must story | Route/wireframe | Người dùng bấm/nhập | Dữ liệu lưu lâu dài | Không lưu ở MVP |
+|---|---|---|---|---|
+| Xem lịch hôm nay | `/appointments`, list/filter | Chọn ngày, status | giờ hẹn, status, khách, dịch vụ | modal filter đang mở |
+| Tạo lịch từ cuộc gọi | `/appointments/new`, form | chọn/nhập khách, dịch vụ, giờ, note | customer, service, `starts_at`, note | trạng thái focus của input |
+| Đổi status lịch | `/appointments/[id]`, detail | chọn confirmed/cancelled | status, `updated_at` | toast “đã lưu” |
+
+**Tự kiểm tra:** Nếu reload trang, dữ liệu đó có cần còn không? Nếu câu trả lời là có, nó là ứng viên database. Nếu chỉ tồn tại trong lúc người dùng đang thao tác UI, nó không phải cột database.
+
+#### Bước C - Viết decision record (10 phút)
+
+Sao chép mẫu dưới đây vào `02-architecture-decision.md`, thay nội dung trong ngoặc vuông. Viết bằng lời của mình trước; chỉ sau đó mới dùng Prompt 1 để nhờ AI phản biện.
+
+```md
+# Architecture decision - [Tên dự án]
+
+## Workload
+- Vận hành: [ai] cần [tạo/xem/sửa gì] với tần suất [mô tả].
+- Phân tích: [câu hỏi báo cáo], hoặc “chưa có trong MVP”.
+
+## Quyết định
+- Chọn: [OLTP / OLAP / kết hợp].
+- Lý do: [1-2 câu gắn với workload].
+- Chọn data model: [SQL / NoSQL].
+- Lý do: [quan hệ, quy tắc dữ liệu và query].
+- Platform: [Supabase/Postgres hoặc lựa chọn khác].
+
+## Trade-off và scope
+- Lợi ích cho MVP: [...]
+- Chưa làm: [...]
+- Rủi ro trước production: [Auth/RLS, dữ liệu nhạy cảm, ...]
+```
+
+**Đáp án mẫu Hana Desk:** Chọn OLTP + SQL + Supabase/Postgres vì lễ tân liên tục ghi/sửa từng lịch, appointment có quan hệ với customer/service, và status cần luật hợp lệ. Báo cáo doanh thu dài hạn, thanh toán và nhiều chi nhánh chưa thuộc MVP.
+
+#### Bước D - Nhờ AI tạo ERD từ mô tả sản phẩm (15 phút)
+
+Học viên **không cần tự vẽ ERD từ đầu**. Học viên có trách nhiệm chuẩn bị đúng đầu vào và đánh giá đầu ra; AI có trách nhiệm biểu diễn mô hình đó thành ERD.
+
+1. Gom vào một prompt: 2-3 Must stories, traceability canvas đã điền, page map, các field nhìn thấy trên wireframe và danh sách Later.
+2. Dùng Prompt 2 ở phần 7 để yêu cầu AI tạo ERD Mermaid + data dictionary nháp. Yêu cầu AI không thêm entity/tính năng ngoài input.
+3. Đọc ERD AI trả về bằng ngôn ngữ nghiệp vụ: “một customer có thể có nhiều appointments” có đúng không? “một appointment có đúng một service” có đúng không?
+4. Đối chiếu ERD với wireframe: mọi field người dùng nhập hoặc cần hiển thị có đường đi dữ liệu không? AI có thêm bảng/cột Later không?
+5. Nếu có sai lệch, gửi feedback cụ thể để AI sửa ERD, rồi lưu bản đã duyệt vào `03-erd.md`.
+
+Prompt điền sẵn cho Hana Desk:
+
+> Bạn là database designer. Dựa trên ba Must stories sau: (1) lễ tân xem lịch hôm nay theo status, (2) lễ tân tạo lịch từ cuộc gọi bằng tên khách, số điện thoại demo, dịch vụ, ngày giờ và ghi chú, (3) lễ tân đổi status lịch; cùng page map có list, detail và create/edit form, hãy tạo ERD Mermaid tối giản và data dictionary PostgreSQL. Chỉ dùng `customers`, `services`, `appointments` nếu thật sự cần. Không thêm payment, nhân viên, ca làm, SMS, review hay Auth. Với mỗi cột, nêu story/wireframe sử dụng nó.
+
+ERD mong đợi sau khi AI đã nhận feedback có thể là:
+
+```mermaid
+erDiagram
+  CUSTOMERS ||--o{ APPOINTMENTS : has
+  SERVICES ||--o{ APPOINTMENTS : selected_for
+
+  CUSTOMERS {
+    uuid id PK
+    text full_name
+    text phone
+  }
+  SERVICES {
+    uuid id PK
+    text name
+    integer duration_minutes
+  }
+  APPOINTMENTS {
+    uuid id PK
+    uuid customer_id FK
+    uuid service_id FK
+    timestamptz starts_at
+    text status
+    text notes
+  }
+```
+
+**Điểm dừng để phản hồi AI:** ERD tạo ra quan hệ không khớp vận hành thật, thêm entity thuộc Later, dùng field lặp như `service_1`, `service_2`, hoặc thiếu dữ liệu mà wireframe cần hiển thị.
+
+#### Bước E - Viết data dictionary và query plan (15 phút)
+
+Trong `04-data-dictionary.md`, viết một dòng cho mỗi cột. Không để cột chỉ có tên mà không có lý do.
+
+| Table.column | Type | Null/default | Nhập từ wireframe nào? | Story/query sử dụng |
+|---|---|---|---|---|
+| `appointments.id` | uuid | PK/default | hệ thống | mở detail, update/delete sau này |
+| `appointments.customer_id` | uuid | NOT NULL, FK | form tạo | tạo/list lịch của khách |
+| `appointments.starts_at` | timestamptz | NOT NULL | form tạo | lịch hôm nay, sort |
+| `appointments.status` | text | `pending` + CHECK | form/detail | filter và đổi status |
+| `appointments.notes` | text | NULL | form tạo | detail |
+
+Trong `07-query-plan.md`, viết ba query bằng tiếng Việt trước, rồi mới SQL:
+
+1. List: “Lễ tân xem lịch `pending` hoặc `confirmed`, sắp theo `starts_at` tăng dần.”
+2. Detail: “Lễ tân mở một appointment theo `id`, kèm customer và service.”
+3. Filter: “Lễ tân lọc lịch theo status và ngày.”
+
+Từ đây giải thích index: index `(status, starts_at)` phục vụ list/filter đầu tiên; không index `notes` nếu không có query nào tìm theo notes.
+
+#### Bước F - Tạo script, chạy và chứng minh đúng (20 phút)
+
+1. Dán ERD, dictionary và ba query vào Prompt 3 ở phần 7; yêu cầu AI chỉ đề xuất migration.
+2. Đọc đầu ra theo checklist: table/cột có trong dictionary không, FK có đúng entity không, constraint có bảo vệ rule không, index có query thật không?
+3. Lưu SQL đã sửa vào `05-migration.sql`; tạo dữ liệu giả trong `06-seed.sql`.
+4. Trên Supabase project demo trống, chạy migration trước, seed sau.
+5. Mở Table Editor: xác nhận bảng/cột/quan hệ hiện đúng. Chạy ba query từ query plan.
+6. Thử một dữ liệu sai, ví dụ `status = 'maybe'` hoặc `duration_minutes = -30`; ghi ảnh/lỗi nhận được vào `08-review-notes.md`.
+
+**Nếu script lỗi:** không xóa database hoặc chạy lại nhiều lần. Đọc dòng lỗi, đối chiếu ERD/dictionary, sửa statement nhỏ nhất, ghi nguyên nhân và cách sửa vào review notes.
+
+#### Bước G - Review chéo và chốt sang Buổi 5 (10 phút)
+
+Đổi folder bài với một bạn. Reviewer chỉ trả lời năm câu:
+
+1. Mọi table/cột có truy ngược được về Must story/wireframe không?
+2. Có entity nào thuộc “Later” nhưng lẫn vào schema không?
+3. FK, delete behavior và status constraint có phù hợp không?
+4. Ba query có chạy được với schema này không; index nào thật sự cần?
+5. Route/form nào ở Buổi 5 sẽ dùng Create, Read, Update, Delete?
+
+Tác giả chọn ít nhất một góp ý để sửa và ghi theo mẫu:
+
+```text
+Vấn đề nhận được:
+Quyết định trước review:
+Thay đổi đã thực hiện:
+Lý do giữ hoặc sửa:
+Cách kiểm tra lại:
+```
+
+### Deliverable nộp cuối buổi
+
+Mỗi học viên/nhóm nộp một thư mục hoặc document có cấu trúc:
+
+```text
+01-traceability.md       # Story -> page/wireframe -> data
+02-architecture-decision.md
+03-erd.(md/png/link)
+04-data-dictionary.md
+05-migration.sql
+06-seed.sql
+07-query-plan.md         # list/detail/filter + index rationale
+08-review-notes.md       # góp ý nhận được và thay đổi đã chốt
+```
+
+### Rubric riêng cho bài liên thông
+
+| Tiêu chí | Đạt khi |
+|---|---|
+| Kết nối Buổi 2 | Tất cả table/cột/query đều truy ngược được về story, route hoặc wireframe có sẵn |
+| Cắt scope | Các mục Later không len vào schema MVP |
+| Độ đúng model | ERD, data dictionary, migration và query không mâu thuẫn nhau |
+| Khả năng triển khai | Mỗi UI page có hướng Read/Create/Update rõ để Buổi 5 tiếp tục |
+| Phản biện | Có review và ít nhất một thay đổi có lý do |
+
+## 12. Bài tập giữa Buổi 4 và buổi CRUD
 
 1. Hoàn thiện design pack: decision record, ERD, data dictionary, migration, seed SQL và ba query đại diện UI.
 2. Dùng AI review script, sửa ít nhất một góp ý; ghi “trước/sau/lý do”.
@@ -443,6 +695,6 @@ Việc chuyển sang buổi CRUD:
 Rủi ro cần giải quyết trước production/Auth:
 ```
 
-## 12. Thông điệp chốt buổi
+## 13. Thông điệp chốt buổi
 
 Thiết kế database tốt trong vibe coding không phải tạo nhiều bảng nhất, cũng không phải để AI vẽ ERD trông chuyên nghiệp. Đó là chọn đúng loại hệ thống cho workload, lưu đúng dữ liệu cho luồng người dùng, đặt luật để dữ liệu không sai, và tạo script người khác có thể review/chạy lại. Khi design đã vững, Buổi CRUD sau đó sẽ nhanh hơn và ít phải sửa ngược.
