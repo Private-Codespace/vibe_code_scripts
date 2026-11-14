@@ -1,354 +1,234 @@
-# GIÁO ÁN SCRUM VÀ VIBE CODING — TỪ YÊU CẦU MƠ HỒ ĐẾN SẢN PHẨM CHẠY ĐƯỢC
+# GIÁO ÁN SCRUM VÀ VIBE CODING — EPIC → FEATURES → US → AC → PHÂN LOẠI → ESTIMATE
 
-**Thời lượng:** 420 phút học, chưa tính nghỉ; có thể chia thành hai buổi theo hướng dẫn cuối tài liệu.  
-**Đối tượng:** học viên đã biết mở, chạy và chỉnh sửa một ứng dụng bằng AI; không yêu cầu lập trình thành thạo.  
-**Quy mô:** 15–25 người; nhóm 5 người, gồm 1 Product Owner, 1 Scrum Master và 3 Developers.  
-**Sản phẩm thực hành:** ứng dụng đặt phòng họp; phiên bản đầu dùng một trình duyệt và dữ liệu demo lưu cục bộ.  
-**Đầu ra:** sản phẩm sử dụng được, backlog có thứ tự, mục tiêu hai Sprint, kết quả kiểm tra và một cải tiến có bằng chứng.
+**Thời lượng:** 420 phút học, chưa tính nghỉ.  
+**Đối tượng:** học viên biết dùng AI hỗ trợ xây ứng dụng; làm nhóm 4–5 người.  
+**Trọng tâm:** dùng vibe coding để sinh, kiểm tra và tinh chỉnh backlog theo quy trình người học yêu cầu.  
+**Quy trình bắt buộc:** Epic → AI sinh Features → AI sinh User Stories → AI sinh Acceptance Criteria → AI phân loại từng US thành Analyze/Dev/Test → AI đề xuất story point kèm lý do → nhóm phản biện và chốt → Sprint thực hành.
 
-> Đây là giáo án thực hành được đề xuất cho khóa vibe coding. Các tình huống, số liệu và tên công ty là giả định phục vụ đào tạo. Hai Sprint 105 phút và điểm kiểm tra 5 phút là mô phỏng trong lớp; không phải lịch tổ chức Scrum mặc định cho doanh nghiệp. Tài liệu này không kèm starter code, tài khoản công cụ hoặc báo cáo test đã chạy.
+> AI tạo bản nháp ở mỗi bước. Học viên chịu trách nhiệm làm rõ giả định, sửa đầu ra và xác nhận với người phụ trách. Phân loại áp dụng cho từng US, không gán nhãn cho từng câu AC. Nếu một US có nhiều loại công việc, ghi loại chính và các task phụ; chỉ estimate một lần ở mức US.
 
-## 1. Cách sử dụng bộ tài liệu
+## 1. Bộ tài liệu và kết quả học tập
 
-| Tài liệu | Người dùng | Mục đích |
-|---|---|---|
-| Giáo án này | Giảng viên và học viên | Mục tiêu, lý thuyết, timeline, lab, prompt và đánh giá |
-| [Bài tập và phiếu thực hành](BAI-TAP-VA-PHIEU-THUC-HANH-SCRUM.md) | Học viên | Brief, dữ liệu, acceptance criteria, phiếu trống và bài tập mở rộng |
-| [Hướng dẫn giảng viên](HUONG-DAN-GIANG-VIEN-VA-GOI-Y-XU-LY.md) | Giảng viên | Thông tin khách hàng, thẻ phát sinh, đáp án định hướng và rubric |
-
-**Khối lượng bắt buộc:** một sản phẩm, hai Sprint, mỗi Sprint có mục tiêu, phần sản phẩm đã Done, Review và Retrospective. Không bắt buộc hoàn thành toàn bộ backlog. Phần bài tập tình huống: mỗi nhóm xử lý hai tình huống, không phải triển khai tất cả bằng code.
-
-**Quan hệ với khóa hiện có:** có thể mang kiến thức brief, UI, CRUD, kiểm thử và deploy từ các buổi trước vào bài tập. Đây là chuyên đề riêng; không thay thế hay đánh số lại buổi 8 của lộ trình hiện tại. Không bắt buộc xây lại Auth, AI endpoint và deployment trong ngày học Scrum.
-
-## 2. Mục tiêu đo được
+| Tài liệu | Cách dùng |
+|---|---|
+| Giáo án này | Timeline, kiến thức, prompt và cách dẫn lab |
+| [Phiếu thực hành](BAI-TAP-VA-PHIEU-THUC-HANH-SCRUM.md) | Bài ngân hàng 180 phút: Epic/Feature/US/AC, loại, point và phản biện |
+| [Hướng dẫn giảng viên](HUONG-DAN-GIANG-VIEN-VA-GOI-Y-XU-LY.md) | Gợi ý xử lý, ước lượng và rubric |
+| [Case ngân hàng](APPLYING-SCRUM-DATABASE-QUERY-AGENT-BANKING.md) | Ví dụ đã điền 3 Features, 6 US, 18 AC; loại, AI SP và nhóm SP kèm lý do |
 
 Sau buổi học, học viên có thể:
 
-1. Phỏng vấn khách hàng, phân biệt vấn đề, yêu cầu và giả định.
-2. Viết một Product Goal hướng vào kết quả người dùng.
-3. Tạo 8–12 Product Backlog items, sắp xếp và giải thích ba ưu tiên đầu.
-4. Viết acceptance criteria có thể kiểm tra; thống nhất Definition of Done.
-5. Lập Sprint Goal, chọn phạm vi và xây kế hoạch thực hiện khả thi.
-6. Dùng AI triển khai từng phần nhỏ, kiểm tra kết quả thay vì chỉ tin thông báo của AI.
-7. Ra quyết định khi có yêu cầu mới, lỗi nghiệp vụ hoặc thiếu năng lực thực hiện.
-8. Thu phản hồi người dùng, cập nhật backlog và thử một cải tiến cách làm việc.
+1. Viết Epic có người dùng, vấn đề, giá trị, phạm vi và giả định.
+2. Yêu cầu AI sinh Features là các khả năng sản phẩm, phát hiện feature trùng hoặc ngoài phạm vi.
+3. Từ Feature, sinh các US nhỏ, có quan hệ truy vết và giá trị/đầu ra rõ.
+4. Sinh AC kiểm chứng được, có happy path, validation, quyền và failure path khi liên quan.
+5. Phân loại mỗi US vào Analyze, Dev hoặc Test theo kết quả chính.
+6. Đề xuất point theo độ phức tạp, khối lượng, bất định và phụ thuộc; nêu lý do.
+7. Phản biện estimate của AI, ghi point nhóm chốt và lý do điều chỉnh.
+8. Chọn US để tạo Increment dùng được, chạy kiểm tra và điều chỉnh từ phản hồi.
 
-**Điều kiện đạt cốt lõi:** có ít nhất một luồng sử dụng được và đáp ứng DoD; có evidence kiểm tra; hai Sprint có mục tiêu và phản hồi; trạng thái Done phản ánh đúng chất lượng thực tế. Nhóm chưa có Increment vẫn nộp hồ sơ học tập, nhưng phải ghi rõ phần chưa đạt và kế hoạch hoàn thiện.
+## 2. Quy ước để không nhầm backlog với kế hoạch tuần tự
 
-## 3. Chuẩn bị trước lớp
-
-### 3.1 Giảng viên
-
-- Chuẩn bị starter có khung ứng dụng chạy được, danh sách phòng mẫu và vị trí lưu dữ liệu; thử từ môi trường sạch.
-- Giữ stack mà học viên đã dùng. Không đổi framework hoặc bắt tạo tài khoản mới giữa buổi.
-- Chuẩn bị bản tốt và bản lỗi trên bản sao; có hướng khôi phục nếu AI sửa hỏng.
-- Chạy thử lab với thời gian thực tế; chọn scope đủ nhỏ cho 50 phút phát triển mỗi Sprint.
-- Chuẩn bị bảng công việc, đồng hồ, phiếu trống và thẻ phát sinh trong tài liệu giảng viên.
-- Chuẩn bị phương án mất mạng: bản ứng dụng có lỗi chạy local để phân tích, viết test và sửa; ghi rõ việc không dùng được AI.
-- Với trên 4 nhóm, bố trí trợ giảng hoặc tổ chức Review theo cặp nhóm song song. Không yêu cầu mọi nhóm demo nối tiếp trong 20 phút.
-
-### 3.2 Học viên
-
-- Trước lớp, mở dự án, chạy ứng dụng, đổi một dòng nội dung và nhìn thấy kết quả.
-- Mang laptop; công cụ AI đã truy cập được; lưu lại phiên bản trước khi sửa.
-- Biết xem Console và chạy hướng dẫn kiểm tra cơ bản của dự án.
-- Dùng dữ liệu giả; không cần tài khoản khách hàng thật để làm lab.
-
-### 3.3 Quy ước phạm vi
-
-- Một văn phòng, một múi giờ, các lịch trong cùng ngày; nhập và so sánh thời gian thống nhất.
-- Bản đầu là prototype trên một trình duyệt; local storage không phải cơ chế đồng bộ nhiều người dùng.
-- Các khung giờ được hiểu dạng `[bắt đầu, kết thúc)`: lịch 09:00–10:00 và 10:00–11:00 không trùng.
-- Giảng viên phát ngày demo D khi bắt đầu lab; dùng cùng ngày trong toàn bộ fixture và ghi ngày thực tế vào phiếu.
-- Nếu ứng dụng đã có backend, giữ kiến trúc hiện có nhưng thu hẹp số chức năng. Không hạ tiêu chuẩn đang áp dụng chỉ để kịp giờ.
-
-## 4. Kiến thức cốt lõi và cách dùng ngay
-
-### 4.1 Trách nhiệm trong nhóm
-
-| Trách nhiệm | Thực hiện trong lớp | Dấu hiệu cần điều chỉnh |
+| Thành phần | Ý nghĩa trong buổi học | Ví dụ |
 |---|---|---|
-| Product Owner | Làm rõ giá trị, truyền đạt Product Goal, sắp xếp backlog | Nhận mọi yêu cầu, ép scope mà không trao đổi năng lực |
-| Scrum Master | Hỗ trợ tự quản, giữ sự kiện hữu ích, giúp tháo gỡ trở ngại | Giao việc như cấp trên, đọc báo cáo thay cho nhóm |
-| Developers | Cùng tạo Increment: phân tích, thiết kế, code, test, tích hợp | Mỗi người làm một phần nhưng không có luồng chung chạy được |
+| Epic | Bài toán lớn tạo giá trị | Xây ứng dụng đặt phòng họp |
+| Feature | Khả năng sản phẩm phục vụ Epic | Đặt phòng không trùng |
+| US | Một kết quả nhỏ để thực hiện/kiểm chứng | Nhân viên đặt phòng còn trống |
+| Acceptance Criteria | Điều kiện cụ thể để chấp nhận US | Hai lịch liền kề được phép |
+| Loại | Mục đích công việc chính của US | Analyze / Dev / Test |
+| Story point | Độ lớn tương đối do nhóm ước lượng | 3 SP vì 4 quy tắc biên đã rõ |
+| Definition of Done | Chuẩn chất lượng chung | Tích hợp, AC đạt, regression và evidence |
 
-Developers không chỉ có người viết code. Scrum Team cùng chịu trách nhiệm tạo ra Increment hữu ích và có giá trị. Giữ nguyên vai hai Sprint, sau đó phản tư về cả ba trách nhiệm. [Nguồn: Scrum Guide](https://scrumguides.org/scrum-guide.html)
+Epic, Feature, nhãn công việc và story point là cách tổ chức của lớp, không phải artifact bắt buộc của Scrum. Product Backlog, Sprint Backlog và Increment vẫn là ba artifact; mục tiêu và DoD vẫn phải rõ. [Nguồn: Scrum Guide](https://scrumguides.org/scrum-guide.html)
 
-### 4.2 Ba trụ cột và năm giá trị
+Analyze/Dev/Test là **nhãn cho mục đích chính**, không phải ba đội hay ba Sprint nối đuôi. Một US Dev vẫn cần phân tích và kiểm tra để Done. US Test riêng dành cho một đầu ra kiểm chứng độc lập, như bộ đánh giá hồi quy dùng lại; không dùng để chuyển việc kiểm thử thiết yếu của US Dev sang Sprint sau. US Analyze có thể là PBI hỗ trợ làm rõ/rủi ro, không tự thân là Increment phần mềm.
 
-| Nội dung | Hành vi quan sát được |
-|---|---|
-| Minh bạch | Công khai lỗi, blocker và việc chưa kiểm tra |
-| Kiểm tra | Người khác thử sản phẩm; đối chiếu với expected |
-| Thích nghi | Sửa backlog hoặc cách phối hợp từ bằng chứng |
-| Cam kết, tập trung | Bám mục tiêu chung, hỗ trợ nhau hoàn thành |
-| Cởi mở, tôn trọng, can đảm | Nêu rủi ro sớm, lắng nghe phản biện, dám nói chưa Done |
+## 3. Quy tắc phân loại
 
-[Nguồn lý thuyết: Scrum Guide](https://scrumguides.org/scrum-guide.html). Các hành vi trong bảng là ví dụ đào tạo do người soạn đề xuất.
-
-### 4.3 Các tạo tác và cam kết tương ứng
-
-| Tạo tác | Cam kết | Áp dụng |
+| Loại | Dùng khi đầu ra chính là | Không dùng khi |
 |---|---|---|
-| Product Backlog | Product Goal | Danh sách công việc có thứ tự hướng tới mục tiêu sản phẩm |
-| Sprint Backlog | Sprint Goal | Mục tiêu, hạng mục được chọn và kế hoạch thực hiện |
-| Increment | Definition of Done | Phần sản phẩm dùng được, đáp ứng chuẩn chất lượng |
+| Analyze | Quy tắc được xác nhận, oracle, quyết định dữ liệu hoặc bằng chứng giảm bất định | Chỉ đổi tên task code thành phân tích |
+| Dev | Khả năng phần mềm được triển khai, tích hợp, dùng và kiểm tra được | Chỉ mới có thiết kế hoặc code chưa chạy |
+| Test | Bộ kiểm chứng/đánh giá độc lập có expected, cách chạy và báo cáo | Muốn hoãn test AC của US Dev |
 
-[Nguồn: Scrum Guide](https://scrumguides.org/scrum-guide.html).
+Nếu một US quá rộng và chứa ba đầu ra độc lập, tách thành US nhỏ có AC riêng. Nếu chỉ có các bước bình thường để hoàn thành một chức năng, giữ một US Dev và chia task Analyze/Dev/Test bên trong; không nhân ba point cho cùng công việc.
 
-### 4.4 Những điểm tránh hiểu sai
+## 4. Quy tắc estimate và lý do
 
-- Sprint bao gồm Planning, phát triển, Daily Scrum, Review và Retrospective; không chỉ là giờ viết code.
-- Sprint có độ dài cố định, tối đa một tháng. Trong lớp, hai Sprint mô phỏng đều dài 105 phút.
-- Trong Sprint có thể làm rõ và thương lượng lại phạm vi với Product Owner; không thay đổi gây nguy hiểm cho Sprint Goal, không hạ chất lượng.
-- Nếu Sprint Goal trở nên lỗi thời, chỉ Product Owner có quyền hủy Sprint. Không dùng việc hủy như cách thông thường để xử lý ước lượng sai.
+Thang dùng trong lớp: **1, 2, 3, 5, 8, 13 SP**. Mốc 3 SP tham chiếu: một luồng nhỏ trong ứng dụng đã có sẵn, dữ liệu/quy tắc rõ, ít điểm tích hợp, kiểm tra được bằng một bộ test nhỏ. Đây là mốc của nhóm trong bài tập, không so ngang giữa các nhóm.
 
-[Nguồn: Scrum.org — Sprint](https://www.scrum.org/resources/what-is-a-sprint-in-scrum) và [Scrum Guide](https://scrumguides.org/scrum-guide.html).
+| Point | Dấu hiệu tham khảo | Câu hỏi phản biện |
+|---:|---|---|
+| 1 | Một thay đổi rất nhỏ, ít nhánh, hạ tầng có sẵn | Có bỏ sót test/tích hợp không? |
+| 2 | Phạm vi nhỏ, một vài điều kiện rõ | Có phụ thuộc chưa được xác nhận không? |
+| 3 | Một đầu ra nhỏ, vài quy tắc, rủi ro thấp-vừa | Có tương đương US mốc không? |
+| 5 | Nhiều nhánh hoặc nhiều lớp phối hợp | Có thể tách theo giá trị không? |
+| 8 | Nhiều tích hợp/quyền/biên, rủi ro đáng kể | Cần làm rõ gì trước khi nhận? |
+| 13 | Quá lớn hoặc bất định cao với nhóm | Tách US hoặc làm rõ trước khi đưa Sprint |
 
-User story, story point, bảng Kanban, mẫu ba câu hỏi và công cụ cụ thể không phải yêu cầu bắt buộc của Scrum. Trong lớp, chọn kỹ thuật giúp minh bạch và ra quyết định; không chấm theo việc dùng đúng một phần mềm.
+Mỗi US phải có: **AI point đề xuất; lý do theo độ phức tạp, khối lượng, bất định/phụ thuộc; giả định; độ tin cậy; point nhóm chốt; lý do chênh lệch**. Không suy ra Analyze luôn 2, Dev luôn 5, Test luôn 3. Không mặc định 1 SP = 1 giờ/ngày. Thời gian chờ cấp quyền là phụ thuộc/rủi ro cần quản lý, không tự cộng point theo số ngày chờ.
 
-## 5. Timeline 420 phút
+Point là ước lượng tương đối, không phải điểm năng lực cá nhân hoặc cam kết giao hàng. Nếu đã estimate ở US thì không cộng thêm point Feature/Epic/task. US Dev tính đủ test cần thiết để đạt AC/DoD; US Test riêng chỉ tính phạm vi kiểm chứng bổ sung được mô tả rõ.
 
-Thời gian dưới đây tính theo phút học tích lũy, không bao gồm nghỉ. Có thể nghỉ sau phút 135 và nghỉ trưa sau phút 240; nghỉ giữa hai Sprint không chứa công việc được giao.
+## 5. Chuẩn bị
 
-| Phút | Giảng viên | Học viên | Đầu ra |
+- Giảng viên chuẩn bị Epic đặt phòng, starter chạy được, bảng backlog và fixture có lịch giao nhau.
+- Học viên mở được dự án và công cụ AI trước giờ học; dùng dữ liệu giả.
+- Mỗi nhóm có PO, SM và người làm phát triển/kiểm tra; Developers cùng tạo Increment.
+- Có bản dự phòng để dùng nếu AI/mạng không khả dụng. Không dùng phần lớn giờ học cài công cụ.
+- Với lớp đông, Review theo cặp nhóm song song.
+
+## 6. Timeline 420 phút
+
+Thời gian là phút học tích lũy, không tính nghỉ. Hai Sprint mô phỏng đều 95 phút, gồm cả các sự kiện.
+
+| Phút | Hoạt động | Giảng viên làm gì | Học viên nộp gì |
 |---|---|---|---|
-| 000–020 | Demo một lịch đặt trùng; khảo sát đầu vào | Nêu tác động với người dùng, trả lời câu hỏi ban đầu | Baseline hiểu biết |
-| 020–050 | Giải thích Scrum bằng chính ví dụ | Phân loại vai trò, mục tiêu và tạo tác | Sơ đồ Scrum của nhóm |
-| 050–080 | Đóng vai khách hàng, trả lời theo câu hỏi | Phỏng vấn, tách sự thật và giả định | Product Goal và câu hỏi còn mở |
-| 080–115 | Phản biện thứ tự ưu tiên và scope | Tạo 8–12 hạng mục, viết AC cho hạng mục đầu | Product Backlog có thứ tự |
-| 115–135 | Phân biệt AC và DoD; làm mẫu test biên | Chốt DoD, expected cho test matrix | DoD và kế hoạch kiểm tra |
-| 135–155 | Hỗ trợ Planning 1 | Chốt Why/What/How | Sprint Goal và Sprint Backlog 1 |
-| 155–205 | Quan sát, phát thẻ yêu cầu mới | Phát triển, kiểm tra tiến độ, test và tích hợp | Increment 1 hoặc trạng thái chưa Done |
-| 205–225 | Làm stakeholder; hỗ trợ test chéo | Review, quan sát người dùng, cập nhật backlog | Phản hồi có quyết định |
-| 225–240 | Hướng dẫn Retro | Chọn một cải tiến cụ thể | Hành động thử ở Sprint 2 |
-| 240–260 | Đưa phản hồi khách hàng | Planning 2 dựa trên bằng chứng | Sprint Goal và Sprint Backlog 2 |
-| 260–310 | Phát thẻ lỗi hồi quy | Phát triển, kiểm tra và áp dụng cải tiến | Increment 2 |
-| 310–330 | Hỗ trợ Review song song | Thử tác vụ và so sánh với Sprint 1 | Bằng chứng trước–sau |
-| 330–345 | Dẫn Retro 2 | Đánh giá cải tiến đã thử | Bài học và hành động tiếp |
-| 345–395 | Giao hai tình huống/nhóm, phản biện | Phân tích, quyết định và bảo vệ lựa chọn | Phiếu xử lý tình huống |
-| 395–420 | Kiểm tra cá nhân, phản hồi, chốt | Hoàn thiện hồ sơ, viết kế hoạch áp dụng | Bộ bài nộp và exit ticket |
+| 000–020 | Khởi động | So sánh backlog AI sinh tốt/xấu | Baseline và lỗi phát hiện |
+| 020–045 | Scrum và quy ước | Làm rõ mục tiêu, nhãn, point, DoD | Mốc estimate nhóm |
+| 045–080 | Epic → Features | Đóng vai khách hàng, phản biện scope | Epic và 3–5 Features đã review |
+| 080–125 | Features → US | Gợi ý chia nhỏ theo kết quả | 8–12 US có ID và Feature cha |
+| 125–165 | US → AC | Làm mẫu happy/edge/failure | AC kiểm tra được cho US ưu tiên |
+| 165–200 | Phân loại và estimate | Tổ chức phản biện point | Loại, AI SP, lý do, SP nhóm |
+| 200–295 | Sprint mô phỏng 1 | Hỗ trợ, phát một thẻ thay đổi | Increment, evidence, Review/Retro |
+| 295–390 | Sprint mô phỏng 2 | Đưa phản hồi, quan sát điều chỉnh | Increment cải tiến và backlog mới |
+| 390–410 | Tình huống | Giao hai tình huống/nhóm | Quyết định sửa AC/loại/point |
+| 410–420 | Tổng kết | Kiểm tra cá nhân, chốt bài | Hồ sơ và exit ticket |
 
-## 6. Lab khám phá bài toán — 30 phút
+## 7. Bước 1 — Epic → vibe code sinh Features
 
-### 6.1 Brief phát cho học viên
+**Epic mẫu:** “Xây ứng dụng giúp nhân viên tự tìm và đặt phòng họp, giảm đặt trùng so với tin nhắn và bảng tính.”
 
-> Công ty An Phát có 80 nhân viên và 4 phòng họp. Nhân viên đặt phòng qua tin nhắn và bảng tính. Thường có lịch trùng, thay đổi chưa được cập nhật hoặc phòng bị giữ dù cuộc họp đã hủy. Hành chính muốn một ứng dụng dễ dùng: xem phòng trống, đặt nhanh, thông báo, phân quyền, báo cáo và kết nối lịch.
-
-### 6.2 Cách tổ chức
-
-1. Đọc brief và ghi điều chưa rõ — 5 phút.
-2. Phỏng vấn khách hàng — 10 phút.
-3. Viết vấn đề, giả định và Product Goal — 10 phút.
-4. Đọc lại hiểu biết cho khách hàng xác nhận — 5 phút.
-
-Gợi ý câu hỏi: Ai gặp vấn đề thường xuyên nhất? Thiệt hại là gì? Đặt trùng được hiểu thế nào? Hai lịch nối tiếp có được phép? Việc gì có thể làm thủ công trước? Bằng chứng nào cho thấy giải pháp hữu ích?
-
-**Product Goal tham khảo:** nhân viên tự tìm và đặt phòng phù hợp, giảm đặt trùng khi tổ chức họp.
-
-**Bằng chứng cần có:** một nhóm người dùng, một vấn đề ưu tiên, một mục tiêu, ít nhất ba điều còn cần kiểm chứng. Không kết luận đã giảm đặt trùng trong doanh nghiệp chỉ từ demo trong lớp.
-
-## 7. Lab backlog và chất lượng — 55 phút
-
-### 7.1 Backlog tham khảo
-
-| ID | Nhu cầu | Lý do cân nhắc |
-|---|---|---|
-| B01 | Xem phòng và sức chứa | Có thông tin chọn phòng |
-| B02 | Xem lịch theo ngày | Biết phòng bận lúc nào |
-| B03 | Tạo lịch đặt hợp lệ | Hoàn thành nhu cầu cốt lõi |
-| B04 | Ngăn đặt trùng | Giải quyết vấn đề ưu tiên |
-| B05 | Hủy lịch đặt | Giải phóng khung giờ |
-| B06 | Lọc theo số người | Hỗ trợ chọn phòng |
-| B07 | Nhắc lịch | Tăng tiện ích |
-| B08 | Báo cáo sử dụng | Phục vụ quản trị |
-| B09 | Đồng bộ lịch bên ngoài | Mở rộng tích hợp |
-
-Cho học viên tự đề xuất trước khi đưa mẫu. B03/B04 có thể được gộp thành một hạng mục nhỏ đi hết luồng: tạo lịch có kiểm tra trùng. Không coi một chức năng tạo lịch cho phép trùng là đã dùng được chỉ vì màn hình hoạt động.
-
-### 7.2 Acceptance criteria mẫu cho tạo lịch
-
-1. Nhập được phòng, người đặt, ngày, giờ bắt đầu và kết thúc.
-2. Thiếu trường bắt buộc thì báo lỗi rõ và không lưu.
-3. Giờ kết thúc phải sau giờ bắt đầu.
-4. Hai khoảng giờ giao nhau trong cùng phòng/ngày thì từ chối.
-5. Cùng giờ nhưng khác phòng được phép.
-6. Lịch liền kề được phép.
-7. Lịch hợp lệ xuất hiện sau khi lưu và vẫn còn sau refresh.
-
-### 7.3 Definition of Done mẫu
-
-- Tích hợp vào phiên bản chung, không chỉ chạy trên phần riêng của một người.
-- AC liên quan được kiểm tra và đạt; các luồng cốt lõi bị ảnh hưởng đã kiểm tra lại.
-- Không còn lỗi đã biết làm sai quy tắc đặt phòng hoặc chặn luồng cốt lõi trong phạm vi.
-- Dữ liệu vẫn còn sau refresh theo mô hình lưu trữ đã thống nhất.
-- Có một người khác kiểm tra kết quả; có evidence và hướng dẫn chạy.
-- Giới hạn phiên bản được ghi rõ; không trình bày local prototype như hệ thống nhiều người dùng.
-
-AC mô tả yêu cầu riêng của hạng mục; DoD là chuẩn chất lượng chung. Hạng mục chưa đạt DoD không được tính là Increment hoàn thành. Không hạ DoD để chuyển trạng thái kịp giờ. [Nguồn: Scrum.org — Definition of Done](https://www.scrum.org/resources/what-definition-done)
-
-## 8. Sprint mô phỏng 1 — 105 phút
-
-### 8.1 Planning — 20 phút
-
-Thảo luận Why: Sprint đem lại giá trị gì; What: có thể hoàn thành gì; How: làm và kiểm tra thế nào. Developers chọn công việc qua trao đổi với Product Owner và tự xây kế hoạch. [Nguồn: Sprint Planning](https://www.scrum.org/resources/what-is-sprint-planning)
-
-**Sprint Goal gợi ý:** người dùng xem lịch và đặt một phòng còn trống mà không tạo lịch trùng trong phiên bản thử nghiệm.
-
-Phân rã theo phần chạy được: dữ liệu/lịch mẫu, luồng xem–đặt có validation, kiểm tra và tích hợp. Không chia thành ba silo UI/backend/test rồi chờ đến cuối mới ghép.
-
-### 8.2 Phát triển — 50 phút
-
-| Phút trong block | Việc thực hiện |
-|---|---|
-| 0–10 | Thống nhất dữ liệu, luồng và phần việc nhỏ |
-| 10–25 | Yêu cầu AI triển khai từng phần, chạy thử ngay |
-| 25–30 | Điểm kiểm tra tiến độ mô phỏng |
-| 30–40 | Điều chỉnh kế hoạch, tích hợp, sửa lỗi |
-| 40–50 | Chạy test liên quan, đối chiếu DoD |
-
-Tại điểm kiểm tra: Sprint Goal có nguy cơ gì? Việc quan trọng tiếp theo là gì? Ai cần phối hợp? Có việc nào nên dừng hoặc thương lượng giảm scope?
-
-Điểm 5 phút này mô phỏng mục đích kiểm tra và điều chỉnh, không phải thay thế quy định thực tế. Daily Scrum là sự kiện 15 phút của Developers mỗi ngày làm việc; hình thức do Developers chọn, tập trung tiến độ tới Sprint Goal và kế hoạch tiếp theo. [Nguồn: Daily Scrum](https://www.scrum.org/resources/what-is-a-daily-scrum)
-
-**Thẻ phát sinh khoảng phút 30:** giám đốc hành chính muốn thêm biểu đồ để demo ấn tượng. Nhóm ghi nhận quyết định và lý do; không tự động nhận hoặc từ chối mà chưa làm rõ giá trị, tác động.
-
-### 8.3 Review — 20 phút
-
-- 3 phút: nêu mục tiêu, phần Done và giới hạn.
-- 7 phút: stakeholder hoặc nhóm khác tự dùng: tìm phòng cho 6 người, đặt, thử đặt trùng.
-- 5 phút: trao đổi điều quan sát được và nhu cầu mới.
-- 5 phút: cập nhật backlog và ghi lý do.
-
-Review theo cặp nhóm song song nếu lớp đông. Ghi phần chưa hoàn thành minh bạch; không demo nó như Increment đã Done. Review là phiên làm việc để kiểm tra kết quả và quyết định hướng tiếp, không chỉ trình chiếu. [Nguồn: Sprint Review](https://www.scrum.org/resources/what-is-a-sprint-review)
-
-### 8.4 Retrospective — 15 phút
-
-Mỗi người ghi một việc hiệu quả, một trở ngại và một đề xuất. Nhóm chọn một cải tiến có người theo dõi và cách kiểm chứng, ví dụ: trước khi AI sửa quy tắc, viết ba test biên; người khác kiểm tra trước khi chuyển Done.
-
-## 9. Sprint mô phỏng 2 — 105 phút
-
-### 9.1 Planning — 20 phút
-
-Phản hồi: “Tôi đặt được phòng nhưng không biết hủy khi cuộc họp thay đổi; tôi cũng khó chọn phòng đủ chỗ.” Nhóm sắp lại backlog và chọn mục tiêu; không mặc định làm hết.
-
-**Sprint Goal gợi ý:** người dùng có thể hủy lịch và đặt lại vào khung giờ vừa được giải phóng.
-
-Mang hành động cải tiến từ Retro 1 vào kế hoạch. Dùng dữ liệu Sprint 1 để dự báo năng lực, tránh cam kết dựa trên kỳ vọng AI làm nhanh hơn.
-
-### 9.2 Phát triển — 50 phút
-
-Giữ nhịp như Sprint 1. Phát thẻ: lịch đã hủy vẫn bị tính khi kiểm tra trùng. Nhóm tái hiện, xác định expected, kiểm tra code, sửa nhỏ và chạy lại luồng đặt–hủy–đặt lại. Nếu nhóm không chọn hủy lịch, dùng thẻ lỗi phù hợp phần đã chọn, không ép đổi mục tiêu chỉ để diễn tình huống.
-
-### 9.3 Review — 20 phút
-
-Người dùng tự tạo lịch, hủy và đặt lại cùng phòng/giờ. Ghi task hoàn thành, thời gian, số lần cần giúp, lỗi và lời phản hồi. So sánh cùng tác vụ/điều kiện nếu muốn nhận xét trước–sau. Không suy rộng kết quả vài người trong lớp thành hiệu quả doanh nghiệp.
-
-### 9.4 Retrospective — 15 phút
-
-Hành động cải tiến đã được thực hiện chưa? Có evidence gì? Điều gì vẫn chưa biết? Chọn hành động tiếp theo; không mặc định cải tiến thành công chỉ vì nhóm cảm thấy tốt hơn.
-
-## 10. Xử lý tình huống thực tế — 50 phút
-
-5 phút giao bài; 15 phút thảo luận; 20 phút trình bày/phản biện; 10 phút chốt. Mỗi nhóm nhận hai tình huống trong phiếu bài tập.
-
-| Tình huống | Năng lực cần luyện |
-|---|---|
-| Khách hàng yêu cầu “nhanh, dễ dùng” | Làm rõ mục tiêu và cách đo |
-| Yêu cầu tích hợp lịch xuất hiện giữa Sprint | Thương lượng giá trị, scope và rủi ro |
-| AI chỉ so sánh giờ bắt đầu để phát hiện trùng | Tìm phản ví dụ, kiểm chứng quy tắc |
-| Đã code xong nhưng chưa test khi gần hết giờ | Minh bạch chất lượng, giữ DoD |
-| Người giữ phần kiểm tra thời gian rời nhóm | Chia sẻ kiến thức, điều chỉnh năng lực |
-| Người dùng vẫn nhắn hành chính dù có app | Tìm nguyên nhân trước khi thêm tính năng |
-
-Mẫu báo cáo: vấn đề → điều chưa rõ → lựa chọn → quyết định → tác động tới mục tiêu/chất lượng → bước kiểm chứng.
-
-## 11. Prompt hỗ trợ vibe coding
-
-### P1. Làm rõ yêu cầu
+Giảng viên cung cấp 4 phòng, một văn phòng, cùng múi giờ; bản đầu dùng một trình duyệt. Học viên hỏi thêm về người dùng, định nghĩa trùng, hủy lịch và giá trị ưu tiên.
 
 ```text
-Bạn hỗ trợ phân tích bài toán sau: [brief].
-Liệt kê người dùng, nhu cầu, câu hỏi cần hỏi, giả định cần kiểm chứng
-và rủi ro làm sản phẩm không sử dụng được.
-Tách rõ thông tin đã được khách hàng xác nhận và suy luận.
-Không tự biến giả định thành yêu cầu.
+Epic: [nội dung]
+Người dùng / vấn đề / giá trị: [...]
+Ràng buộc và ngoài phạm vi: [...]
+Hãy sinh 3–5 Features theo khả năng người dùng cần có.
+Mỗi Feature: ID, tên, người dùng, giá trị, phạm vi, ngoài phạm vi,
+giả định, phụ thuộc và lý do ưu tiên.
+Không dùng frontend/backend/database làm tên Feature.
+Chưa sinh US hoặc code. Tách rõ dữ kiện và điều cần xác nhận.
 ```
 
-### P2. Thực hiện một hạng mục
+Features tham khảo: F01 xem phòng/lịch; F02 đặt phòng không trùng; F03 hủy và giải phóng khung giờ; F04 lọc phòng theo nhu cầu. Nhóm review và sửa trước khi dùng làm đầu vào bước sau.
+
+## 8. Bước 2 — Features → vibe code sinh US
 
 ```text
-Sprint Goal: [...]
-Hạng mục duy nhất cần triển khai: [...]
-Acceptance criteria: [...]
-Definition of Done: [...]
-Đọc cấu trúc hiện có. Tóm tắt cách hiểu và phạm vi sửa trước khi sửa.
-Hỏi lại quy tắc nghiệp vụ chưa rõ; không bổ sung tính năng ngoài scope.
-Sau khi sửa, nêu thay đổi, cách chạy kiểm tra, kết quả thực sự đã chạy
-và phần chưa xác minh. Không tự kết luận Done chỉ vì code đã được tạo.
+Epic và Features đã review: [...]
+Từ mỗi Feature, sinh các US/PBI nhỏ với ID truy vết về Feature cha.
+Mỗi US có người nhận giá trị, nhu cầu/đầu ra, lợi ích,
+phạm vi, ngoài phạm vi và phụ thuộc. Chưa estimate.
+Nếu cần đầu ra phân tích/kiểm chứng độc lập, mô tả đầu ra đó rõ ràng.
+Không bắt buộc tạo đủ ba loại cho mọi Feature nếu không có lý do.
+Không để toàn bộ Analyze ở Sprint đầu và Test ở Sprint cuối.
 ```
 
-### P3. Chẩn đoán lỗi
+Nhóm kiểm tra US có trùng, quá lớn, thuần task kỹ thuật hoặc thiếu người nhận kết quả không. Giữ quan hệ Epic → Feature → US khi sửa.
+
+## 9. Bước 3 — US → vibe code sinh AC
 
 ```text
-Expected: [...]
-Actual: [...]
-Bước tái hiện, dữ liệu và môi trường: [...]
-Evidence hiện có: [...]
-Phân tích code liên quan, nêu giả thuyết và cách kiểm chứng.
-Đề xuất sửa nhỏ nhất phù hợp; thêm trường hợp kiểm tra chống tái diễn.
-Không sửa nhiều nguyên nhân chưa có bằng chứng cùng lúc.
+US đã review: [...]
+Quy tắc nghiệp vụ / dữ liệu / quyền: [...]
+Sinh AC với ID [US-ID]-AC01... theo Given/When/Then hoặc expected cụ thể.
+Bao phủ luồng thành công, dữ liệu sai, trường hợp biên,
+quyền/failure khi liên quan. Nêu dữ liệu và expected kiểm chứng được.
+Không dùng "nhanh", "đẹp", "đúng" nếu không có tiêu chí rõ.
+Nếu thiếu thông tin, đặt câu hỏi thay vì tự quyết định nghiệp vụ.
 ```
 
-### P4. Chuẩn bị Review
+Ví dụ F02-US02: có lịch phòng A 09:00–10:00; đặt 09:30–10:30 bị từ chối; đặt 10:00–11:00 được phép; đặt cùng giờ phòng B được phép; refresh vẫn còn lịch hợp lệ. AC là yêu cầu riêng, DoD là chuẩn chung như tích hợp, regression và evidence.
+
+## 10. Bước 4 — Phân loại → estimate kèm lý do
 
 ```text
-Sprint Goal: [...]
-DoD và kết quả kiểm tra: [...]
-Tổng hợp phần Done có evidence, phần chưa Done, giới hạn,
-câu hỏi cho người dùng và giả thuyết cần kiểm chứng.
-Không thay evidence bằng nhận xét của AI.
+Backlog và AC đã review: [...]
+Mốc 3 SP và điều kiện năng lực/hạ tầng của nhóm: [...]
+Với từng US, chọn một loại chính: Analyze, Dev hoặc Test.
+Nêu lý do phân loại; nếu có task phụ, liệt kê nhưng không estimate trùng.
+Đề xuất point từ 1,2,3,5,8,13 dựa trên:
+độ phức tạp, khối lượng, bất định, phụ thuộc và test cần để Done.
+Ghi giả định, độ tin cậy và điều gì có thể làm estimate thay đổi.
+US 13 SP cần đề xuất cách chia nhỏ. Không quy đổi point ra ngày.
+Xuất bảng: Feature ID, US ID, tên, loại, AC IDs, AI SP,
+lý do SP, giả định, độ tin cậy. Để trống SP nhóm chốt.
 ```
 
-## 12. Đánh giá và bộ bài nộp
+**Ví dụ thảo luận, không phải định mức:**
 
-| Tiêu chí | Điểm tối đa | Bằng chứng |
+| Feature | US | Loại | AI SP | Lý do |
+|---|---|---|---:|---|
+| F01 | Xác nhận cách hiển thị lịch/ngày | Analyze | 2 | Ít thuật ngữ, một stakeholder, chưa đổi code |
+| F01 | Xem lịch phòng theo ngày | Dev | 3 | Nguồn có sẵn, một màn hình và ba trạng thái |
+| F02 | Chốt quy tắc giao nhau và oracle | Analyze | 3 | Cần trường hợp liền kề/bao phủ và xác nhận nghiệp vụ |
+| F02 | Tạo lịch có validation và chống trùng | Dev | 5 | Nhiều nhánh, lưu dữ liệu, tích hợp và kiểm tra biên |
+| F02 | Bộ regression giao nhau dùng lại | Test | 3 | Bộ kiểm chứng độc lập nhiều fixture; không thay test AC của US Dev |
+| F03 | Hủy lịch và đặt lại | Dev | 3 | Một chuyển trạng thái, ảnh hưởng kiểm tra trùng |
+
+Sau AI, từng người tự chọn point, mở đồng thời, thảo luận chênh lệch rồi nhóm chốt. Nếu khác 3 và 8, hỏi về giả định và scope thay vì lấy trung bình. Lưu cả đề xuất AI và kết quả nhóm.
+
+## 11. Hai Sprint thực hành — mỗi Sprint 95 phút
+
+### 11.1 Cấu trúc cố định
+
+| Hoạt động | Phút | Nội dung |
 |---|---:|---|
-| Hiểu vấn đề và giá trị | 15 | Product Goal, câu hỏi và lý do ưu tiên |
-| Backlog và AC | 15 | Thứ tự, scope nhỏ, expected kiểm tra được |
-| Mục tiêu và kế hoạch Sprint | 15 | Why/What/How, công việc hỗ trợ mục tiêu |
-| Increment và chất lượng | 25 | Luồng chạy được, test, DoD, giới hạn |
-| Xử lý thay đổi | 15 | Quyết định có dữ kiện và tác động |
-| Học từ phản hồi | 15 | Backlog đổi có lý do, cải tiến được thử |
-| **Tổng** | **100** | |
+| Planning | 15 | Goal, US phù hợp năng lực, kế hoạch và rủi ro |
+| Thực hiện | 45 | Phân tích/triển khai/test/tích hợp; checkpoint 5 phút trong block |
+| Review | 20 | Người khác tự dùng, đối chiếu AC/DoD, cập nhật backlog |
+| Retro | 15 | Một cải tiến có người theo dõi và cách đo |
 
-Điểm số phản ánh mức độ học; không thay điều kiện đạt cốt lõi ở mục 2. Không dùng số dòng code, số prompt, số tính năng hoặc velocity để xếp hạng cá nhân.
+Điểm kiểm tra 5 phút là mô phỏng. Trong làm việc thực tế, Daily Scrum là sự kiện 15 phút mỗi ngày làm việc của Developers. [Nguồn](https://www.scrum.org/resources/what-is-a-daily-scrum)
 
-**Hồ sơ nộp:** Product Goal; backlog đầu/cuối; hai Sprint Goal và kế hoạch; DoD; source/phiên bản app và hướng dẫn chạy; test matrix có actual/evidence; feedback; quyết định thay đổi; Retro và cải tiến; known limitations.
+### 11.2 Sprint 1
 
-**25 phút cuối:** 10 phút kiểm tra cá nhân, 10 phút hoàn thiện hồ sơ/nhận phản hồi, 5 phút viết kế hoạch áp dụng.
+**Goal gợi ý:** người dùng xem lịch và đặt phòng còn trống, không tạo lịch trùng trong phạm vi demo. Chọn lát cắt đủ nhỏ, gồm cả quyền/chất lượng liên quan. Không chỉ chọn US Analyze để có nhiều ticket Done.
 
-Exit ticket:
+Thẻ giữa Sprint: “Thêm báo cáo thống kê để demo đẹp.” Nhóm làm rõ giá trị, xem tác động mục tiêu; nếu nhận thì phải cập nhật Feature/US/AC, loại và estimate phù hợp, không chỉ sửa code.
 
-1. AI tạo xong UI nhưng chưa kiểm tra trùng lịch: có được Done không? Vì sao?
-2. Có yêu cầu mới giữa Sprint: cần làm rõ, trao đổi và cập nhật những gì?
-3. App chạy đúng nhưng người dùng không dùng: bước kiểm chứng tiếp theo là gì?
+### 11.3 Sprint 2
 
-## 13. Chuyển vào công việc và điều chỉnh thời lượng
+Phản hồi: người dùng cần hủy cuộc họp và đặt lại cùng khung giờ. AI đề xuất Feature/US/AC bổ sung hoặc sửa, nhóm review và estimate phần mới/chưa chọn. **Goal gợi ý:** hủy và giải phóng khung giờ để đặt lại được.
 
-**Sau lớp:** chọn một công việc thật, xác định người nhận giá trị, mục tiêu, backlog nhỏ và chuẩn hoàn thành. Thử một chu kỳ, xin phản hồi, ghi điều chỉnh. Không gọi mọi checklist cá nhân là Scrum; muốn áp dụng đầy đủ cần tổ chức các trách nhiệm và sự kiện phù hợp.
+Không sửa point của US đã hoàn thành để làm đẹp số liệu. Với phần việc mới, giữ lịch sử thay đổi và nêu rõ phạm vi.
 
-**Chia hai buổi:** buổi A 240 phút tới hết Retro 1; buổi B 180 phút từ Planning 2 tới tổng kết. Khoảng cách là lịch đào tạo; hai Sprint trong lớp vẫn là mô phỏng, không coi khoảng giữa là một Sprint làm việc thực tế.
+## 12. Definition of Done cho lab
 
-**Nếu chỉ có 180 phút, gồm 15 phút nghỉ:** 15 phút lý thuyết; 20 phút khám phá; 20 phút backlog/DoD; 75 phút một Sprint mô phỏng (Planning 15, phát triển 35, Review 15, Retro 10); nghỉ 15; tình huống 20; tổng kết 15. Bản này chỉ có một vòng trải nghiệm, chưa kiểm chứng việc áp dụng cải tiến sang Sprint sau.
+- US Dev: AC đạt, tích hợp bản chung, regression liên quan đạt, dữ liệu còn sau refresh, hướng dẫn/giới hạn và evidence rõ.
+- US Analyze: đầu ra phân tích/oracle được xác nhận bởi người phù hợp, câu hỏi chưa rõ được ghi; chưa có phần mềm thì không gọi đây là Increment phần mềm.
+- US Test: có expected độc lập, cách chạy, kết quả thực tế và danh sách giới hạn; không báo PASS chưa chạy.
+- Các đầu ra hỗ trợ có điều kiện hoàn thành riêng; DoD của Increment sản phẩm vẫn phải thỏa chất lượng chung.
 
-## 14. Tài liệu tham chiếu
+## 13. Tình huống và chấm bài
 
-- [Scrum Guide 2020 — bản HTML chính thức](https://scrumguides.org/scrum-guide.html).
-- [Scrum.org — Sprint](https://www.scrum.org/resources/what-is-a-sprint-in-scrum).
-- [Scrum.org — Sprint Planning](https://www.scrum.org/resources/what-is-sprint-planning).
-- [Scrum.org — Daily Scrum](https://www.scrum.org/resources/what-is-a-daily-scrum).
-- [Scrum.org — Sprint Review](https://www.scrum.org/resources/what-is-a-sprint-review).
-- [Scrum.org — Definition of Done](https://www.scrum.org/resources/what-definition-done).
+| Tình huống | Học viên phải làm |
+|---|---|
+| AI sinh Feature “xây database” | Chuyển thành khả năng có giá trị, giữ task kỹ thuật ở trong US |
+| US chứa đặt/hủy/lọc/báo cáo | Tách nhỏ, AC riêng, estimate lại từng phần |
+| AC “đặt nhanh, dễ dùng” | Làm rõ người dùng, tác vụ, cách đo và expected |
+| AI gán Analyze=2, Dev=5, Test=3 mọi nơi | Phản biện theo độ lớn, bất định và mốc tham chiếu |
+| Dev ticket không test vì có Test ticket | Bổ sung test AC/DoD vào Dev; xác định đầu ra Test độc lập |
+| Thay đổi yêu cầu giữa Sprint | Cập nhật chuỗi truy vết và thương lượng scope, giữ mục tiêu/chất lượng |
 
-Các tài liệu lý thuyết được đối chiếu khi soạn nội dung hội thoại. Timeline, case, dữ liệu, prompt, phiếu và rubric là thiết kế đào tạo riêng.
+| Tiêu chí | Điểm tối đa |
+|---|---:|
+| Epic và Features có giá trị, đúng scope | 15 |
+| US nhỏ, truy vết được và không trùng | 20 |
+| AC cụ thể, có expected và trường hợp biên | 20 |
+| Phân loại có lý do, không tạo silo | 10 |
+| Point, giả định, lý do và phản biện nhóm | 20 |
+| Increment, evidence, Review/Retro | 15 |
+| **Tổng** | **100** |
+
+**Bài nộp:** Epic; Features; US/AC; bảng loại/AI SP/lý do/SP nhóm; DoD; hai Sprint Goal; source/phiên bản và kết quả kiểm tra; feedback; log thay đổi và Retro. Không chấm theo số prompt hay tổng point hoàn thành.
+
+**Exit ticket:** giải thích Feature khác task; sửa một AC mơ hồ; giải thích vì sao một US là 5 thay vì 3 SP.
+
+## 14. Chuyển sang case ngân hàng
+
+Dùng [Epic Database Query Agent](APPLYING-SCRUM-DATABASE-QUERY-AGENT-BANKING.md) để luyện cùng quy trình với dữ liệu, quyền và chỉ tiêu phức tạp hơn. Ví dụ đã điền khớp phiếu ngân hàng 180 phút: 3 Features, 6 US và 18 AC; mỗi US có loại, AI SP, nhóm SP minh họa, giả định và lý do giữ/đổi. Chỉ đối chiếu sau khi học viên tự làm bản nháp; các số liệu estimate và hoạt động nhóm không phải evidence thực thi.
+
+Nếu chỉ có 180 phút gồm 15 phút nghỉ: mở đầu/lý thuyết 15; Epic→Feature 20; Feature→US 25; US→AC 25; phân loại/estimate 25; nghỉ 15; Sprint mô phỏng 45 (Planning 10, thực hiện 15, Review 10, Retro 10); tổng kết 10. Bản rút gọn ưu tiên quy trình backlog và một luồng starter rất nhỏ.
